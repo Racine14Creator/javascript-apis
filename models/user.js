@@ -29,7 +29,7 @@ const userSchema = new mongoose.Schema(
     avatar: {
       type: String,
       default:
-        "https://res.cloudinary.com/dkkgmzv6w/image/upload/v1631263152/avatar/avatar-1.png",
+        "https://www.google.com/url?sa=i&url=https%3A%2F%2Fsoundcloud.com%2Fjohn-doe-463064100%2Fsets%2Ffn&psig=AOvVaw0g6ofPwa0UuixXGhXAqEOn&ust=1735471404034000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCLiBg_msyooDFQAAAAAdAAAAABAJ.jpeg",
     },
     bio: { type: String, default: "" },
     followers: { type: [String], default: [] },

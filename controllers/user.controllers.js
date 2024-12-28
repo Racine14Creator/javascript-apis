@@ -12,6 +12,7 @@ export const getUser = (req, res) => {
 
 // Fonction pour créer un utilisateur
 export const createUser = async (req, res) => {
+  const { username, email, role } = req.body;
   res.send("Create User");
 };
 
