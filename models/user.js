@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import bcrypt from "bcryptjs";
 
-const userSchema = new mongoose.Schema(
+export const userSchema = new mongoose.Schema(
   {
     username: {
       type: String,
@@ -48,6 +48,9 @@ userSchema.pre("save", async function (next) {
   next();
 });
 
-const User = mongoose.models.User || mongoose.model("User", userSchema);
+// Vérifier si le modèle existe déjà pour éviter les erreurs de redéclaration
+export const User = mongoose.models.User || mongoose.model("User", userSchema);
 
+// Export par défaut pour être compatible avec les imports ESM
 export default User;
+
