@@ -20,12 +20,32 @@ const userSchema = z.object({
 
 // Fonction pour récupérer tous les utilisateurs
 export const getUsers = async (req, res) => {
-  res.json({ message: "Getting all users", status: 200, data: [] });
+  try {
+    const users = await User.find({});
+
+    return res.json({ message: "All users", data: users });
+  } catch (error) {
+    console.log(error);
+    return res.json({ message: error });
+  }
 };
 
 // Fonction pour récupérer un utilisateur spécifique
-export const getUser = (req, res) => {
-  const { id } = req.params;
+export const getUser = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const user = await User.findById(id);
+
+    if (!user) {
+      return res.json({ message: "Utilisateur non trouvé" });
+    }
+
+    return res.json({ user });
+  } catch (error) {
+    console.log(error);
+    return res.json({ message: error });
+  }
 
   res.json({ id });
 };
@@ -63,7 +83,29 @@ export const createUser = async (req, res) => {
 
 // Fonction pour mettre à jour un utilisateur
 export const updateUser = async (req, res) => {
-  res.send("Update User");
+  const { id } = req.params;
+  const { username, email, role, password } = userSchema.parse(req.body);
+
+  const user = await User.findById(id);
+
+  if (!user) {
+    return res.status(404).json({ message: "Utilisateur non trouvé" });
+  }
+
+  user.username = username;
+  user.email = email;
+  user.role = role;
+  user.password = password;
+
+  await user
+    .save()
+    .then((_) => {
+      return res.status(200).json({ message: "success", data: user });
+    })
+    .catch((error) => {
+      console.log(error);
+      return res.json({ error });
+    });
 };
 
 // Fonction pour supprimer un utilisateur

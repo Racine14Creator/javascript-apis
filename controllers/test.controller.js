@@ -1,7 +1,5 @@
 import Test from "../models/test.js";
 
-import connectDB from "../lib/db.mongodb.js";
-
 export const getTests = async (req, res) => {
   try {
     const tests = await Test.find();
