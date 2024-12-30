@@ -110,7 +110,23 @@ export const updateUser = async (req, res) => {
 
 // Fonction pour supprimer un utilisateur
 export const deleteUser = async (req, res) => {
-  res.send("Delete User");
+  try {
+    const { id } = req.params;
+
+    const user = await User.findByIdAndDelete(id);
+
+    if (!user) {
+      return res.status(404).json({ message: "Utilisateur non trouvé" });
+    }
+
+    return res.json({
+      message: "Utilisateur supprimé avec succès",
+      data: user,
+    });
+  } catch (error) {
+    console.log(error);
+    return res.json({ message: error });
+  }
 };
 
 // Exporter toutes les fonctions comme un objet
