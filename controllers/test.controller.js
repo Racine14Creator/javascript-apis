@@ -47,7 +47,28 @@ export const postTest = async (req, res) => {
 };
 
 export const updateTest = async (req, res) => {
-  return res.json({ message: "Update test" });
+  const { id } = req.params;
+  const { title, description, status } = req.body;
+
+  const test = await Test.findById(id);
+
+  if (!test) {
+    return res.json({ message: "This test is not found" });
+  }
+
+  test.title = title;
+  test.description = description;
+  test.status = status;
+
+  test
+    .save()
+    .then((_) => {
+      return res.status(200).json({ message: "success", data: test });
+    })
+    .catch((error) => {
+      console.log(error);
+      return res.json({ error });
+    });
 };
 
 export const deleteTest = async (req, res) => {
