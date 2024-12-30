@@ -72,10 +72,21 @@ export const updateTest = async (req, res) => {
 };
 
 export const deleteTest = async (req, res) => {
-  return res.json({ message: "Delete test" });
+  const { id } = req.params;
+
+  const test = await Test.findByIdAndDelete(id);
+
+  if (!test) {
+    return res.json({ message: "This test is not found" });
+  }
+
+  return res.json({ message: "Delete test", data: test });
 };
 
 export default {
   getTests,
   getTest,
+  postTest,
+  updateTest,
+  deleteTest,
 };
