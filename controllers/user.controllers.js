@@ -46,8 +46,6 @@ export const getUser = async (req, res) => {
     console.log(error);
     return res.json({ message: error });
   }
-
-  res.json({ id });
 };
 
 // Fonction pour créer un utilisateur
@@ -81,7 +79,6 @@ export const createUser = async (req, res) => {
   }
 };
 
-// Fonction pour mettre à jour un utilisateur
 export const updateUser = async (req, res) => {
   const { id } = req.params;
   const { username, email, role, password } = userSchema.parse(req.body);
@@ -108,7 +105,6 @@ export const updateUser = async (req, res) => {
     });
 };
 
-// Fonction pour supprimer un utilisateur
 export const deleteUser = async (req, res) => {
   try {
     const { id } = req.params;
@@ -129,7 +125,6 @@ export const deleteUser = async (req, res) => {
   }
 };
 
-// Exporter toutes les fonctions comme un objet
 export default {
   getUsers,
   getUser,
