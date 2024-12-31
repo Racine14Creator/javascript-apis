@@ -10,14 +10,11 @@ import userRouter from "./routes/user.route.js";
 
 import testRouter from "./routes/test.route.js";
 
-dotenv.config();
-const app = express();
-// const DB = process.env.MONGO_URI
+import subRouter from "./routes/subscribers.route.js";
 
-// mongoose
-//   .connect(DB)
-//   .then(() => console.log(`Connected to mongoose`))
-//   .catch((err) => console.log(`Connection failed ${err.message}`));
+dotenv.config();
+
+const app = express();
 
 const PORT = process.env.PORT || 3000;
 
@@ -33,7 +30,9 @@ app.use("/users", userRouter);
 
 app.use("/test", testRouter);
 
+app.use("/subscribers", subRouter);
+
 app.listen(PORT, () => {
-    connectDB()
+  connectDB();
   console.log(`Server is running on port http://localhost:${PORT}`);
 });
