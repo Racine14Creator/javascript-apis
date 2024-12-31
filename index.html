@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CRUD</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <form action="" method="post">
+        <h2>Create a new test</h2>
+        <div class="form-group">
+          <label for="Title">Title</label>
+          <input
+            type="text"
+            name="email"
+            id="email"
+            placeholder="Email: Grace@test.co"
+            class="form-control"
+          />
+          <span class="error">This field is required</span>
+        </div>
+        <div class="form-group">
+          <label for="description">Description</label>
+          <textarea
+            rows="9"
+            name="description"
+            id="description"
+            placeholder="Description"
+            class="form-control"
+          ></textarea>
+          <span class="error">This field is required</span>
+        </div>
+
+        <div class="form-group">
+          <button type="submit" class="btn btn-primary btn-md">Save</button>
+        </div>
+      </form>
+    </div>
+  </body>
+  <script src="./main.js" defer></script>
+</html>
