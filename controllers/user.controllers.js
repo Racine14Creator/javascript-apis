@@ -63,6 +63,8 @@ export const createUser = async (req, res) => {
     // Créer un nouvel utilisateur
     const newUser = new User({ username, email, role, password });
     await newUser.save();
+
+    // Renvoyer la nouvelle utilisateur
     res
       .status(201)
       .json({ message: "Utilisateur créé avec succès", user: newUser });
@@ -91,6 +93,12 @@ export const updateUser = async (req, res) => {
     return res.status(404).json({ message: "Utilisateur non trouvé" });
   }
 
+  if (/\s/.test(username)) {
+    return res.status(400).json({
+      message: "Le nom d'utilisateur ne peut pas contenir d'espaces.",
+    });
+  }
+
   user.username = username;
   user.email = email;
   user.role = role;
@@ -98,12 +106,25 @@ export const updateUser = async (req, res) => {
 
   await user
     .save()
-    .then((_) => {
+    .then((user) => {
       return res.status(200).json({ message: "success", data: user });
     })
     .catch((error) => {
-      console.log(error);
-      return res.json({ error });
+      if (error instanceof z.ZodError) {
+        // Extract validation errors from ZodError
+        const formattedErrors = error.errors.map((err) => ({
+          field: err.path.join("."), // The field that failed validation
+          message: err.message, // The error message
+        }));
+
+        return res.status(400).json({
+          message: "Validation échouée",
+          errors: formattedErrors,
+        });
+      }
+
+      console.error(error);
+      res.status(500).json({ message: "Erreur interne du serveur" });
     });
 };
 

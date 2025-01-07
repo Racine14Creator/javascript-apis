@@ -5,6 +5,7 @@ import Subscriber from "../models/sub.js";
 const subSchema = z.object({
   email: z.string().email("L'address e-mail est invalid"),
 });
+
 export const getSubs = async (req, res) => {
   try {
     const subs = await Subscriber.find();
