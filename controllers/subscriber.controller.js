@@ -30,7 +30,7 @@ export const postSub = async (req, res) => {
 
   newSub
     .save()
-    .then((_) => {
+    .then(() => {
       return res.json({ message: "Votre e-mail est enregistree", email });
     })
     .catch((error) => {
