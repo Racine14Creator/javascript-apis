@@ -27,6 +27,7 @@ export const postSub = async (req, res) => {
   const newSub = new Subscriber({
     email,
   });
+
   newSub
     .save()
     .then((_) => {
@@ -39,15 +40,48 @@ export const postSub = async (req, res) => {
 };
 
 export const getSub = async (req, res) => {
-  return res.json({ message: "Get one sub" });
+  try {
+    const { id } = req.params;
+    const sub = await Subscriber.findById(id);
+
+    return res.json({ message: "Get one sub", data: sub });
+  } catch (error) {
+    console.log(error);
+    throw new Error(error);
+  }
 };
 
 export const updateSub = async (req, res) => {
-  return res.json({ message: "Update sub" });
+  try {
+    const { id } = req.params;
+    const { email } = subSchema.parse(req.body);
+
+    const emailExist = await Subscriber.findOne({ email });
+
+    if (emailExist) {
+      return res.json({ message: "Cet e-mail est déjà utilisé" }).status(400);
+    }
+
+    await Subscriber.updateOne({ _id: id }, { email });
+
+    const updatedSub = await Subscriber.findById(id);
+
+    return res.json({ message: "Update sub", data: updatedSub });
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 export const deleteSub = async (req, res) => {
-  return res.json({ message: "Delete Sub" });
+  try {
+    const { id } = req.params;
+
+    const sub = await Subscriber.findByIdAndDelete(id);
+
+    return res.json({ message: "Delete Sub", data: sub });
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 export default {
