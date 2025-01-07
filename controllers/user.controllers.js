@@ -83,6 +83,8 @@ export const updateUser = async (req, res) => {
   const { id } = req.params;
   const { username, email, role, password } = userSchema.parse(req.body);
 
+  // I need this to check if the username doesn't have special characters
+
   const user = await User.findById(id);
 
   if (!user) {

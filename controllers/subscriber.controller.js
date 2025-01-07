@@ -34,9 +34,9 @@ export const postSub = async (req, res) => {
       return res.json({ message: "Votre e-mail est enregistree", email });
     })
     .catch((error) => {
+      console.log(error);
       return res.json({ message: error });
     });
-  return res.json({ message: "Get Post Sub" });
 };
 
 export const getSub = async (req, res) => {
@@ -47,7 +47,7 @@ export const getSub = async (req, res) => {
     return res.json({ message: "Get one sub", data: sub });
   } catch (error) {
     console.log(error);
-    throw new Error(error);
+    return res.json({ message: error });
   }
 };
 
